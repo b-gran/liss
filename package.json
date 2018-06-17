@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "neutrino build",
-    "test": "neutrino test"
+    "test": "neutrino test",
+    "watch": "neutrino test --watch"
   },
   "devDependencies": {
     "@neutrinojs/jest": "^8.2.3",
