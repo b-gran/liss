@@ -22,6 +22,16 @@ export function map (f) {
   }
 }
 
+export function filter (predicate) {
+  return function* (iterable) {
+    for (const el of iterable) {
+      if (predicate(el)) {
+        yield el
+      }
+    }
+  }
+}
+
 export function take (n) {
   return function* (iterable) {
     for (let i = 0; i < n; i++) {

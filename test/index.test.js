@@ -1,4 +1,4 @@
-import { pipe, take, map } from '../src'
+import { pipe, take, map, filter } from '../src'
 import { getIterator } from '../src/utils'
 
 describe('pipe', () => {
@@ -61,5 +61,27 @@ describe('map', () => {
     expect(Array.from(mapper(iterable))).toEqual([2, 3, 4])
 
     expect(iteratee).toHaveBeenCalledTimes(input.length)
+  })
+})
+
+describe('filter', () => {
+  it('adds all elements satisfying the predicate to the output', () => {
+    const input = ['a', 'b', 'c']
+    const predicate = x => x !== 'b'
+
+    const doFilter = filter(predicate)
+
+    const iterable = getIterator(input)
+    expect(Array.from(doFilter(iterable))).toEqual(['a', 'c'])
+  })
+
+  it('calls the predicate for each element', () => {
+    const input = ['a', 'b', 'c']
+    const predicate = jest.fn(x => x !== 'b')
+
+    const doFilter = filter(predicate)
+    Array.from(doFilter(getIterator(input)))
+
+    expect(predicate).toHaveBeenCalledTimes(input.length)
   })
 })
