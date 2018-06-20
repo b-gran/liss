@@ -57,3 +57,7 @@ export function drop (n) {
     }
   }
 }
+
+export function tail () {
+  return drop(1)
+}
