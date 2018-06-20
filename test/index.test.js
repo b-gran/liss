@@ -1,4 +1,4 @@
-import { pipe, take, map, filter, drop, tail, append, prepend } from '../src'
+import { pipe, take, map, filter, drop, tail, append, prepend, flatMap } from '../src'
 import { getIterator } from '../src/utils'
 
 describe('pipe', () => {
@@ -136,5 +136,20 @@ describe('prepend', () => {
   it('return an iterator containing only the element', () => {
     const iterable = getIterator([])
     expect(Array.from(prepend(1)(iterable))).toEqual([1])
+  })
+})
+
+describe('flatMap', () => {
+  [
+    [x => getIterator([x, 'foo']), 'plain iterator'],
+    [x => [x, 'foo'], 'Arrays'],
+    [x => new Set([x, 'foo']), 'Sets'],
+  ].forEach(([ iteratee, iterableType ]) => {
+    it(`flattens the iterables (${iterableType}) returned by the iteratee`, () => {
+      const iterable = getIterator([1, 2, 3])
+
+      const result = Array.from(flatMap(iteratee)(iterable))
+      expect(result).toEqual([1, 'foo', 2, 'foo', 3, 'foo'])
+    })
   })
 })

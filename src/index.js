@@ -79,3 +79,14 @@ export function prepend (value) {
     }
   }
 }
+
+export function flatMap (iteratee) {
+  return function* (iterable) {
+    for (const el of iterable) {
+      const innerIterable = iteratee(el)
+      for (const mappedEl of innerIterable) {
+        yield mappedEl
+      }
+    }
+  }
+}
