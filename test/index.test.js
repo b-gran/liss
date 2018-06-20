@@ -2,7 +2,7 @@ import { pipe, take, map } from '../src'
 import { getIterator } from '../src/utils'
 
 describe('pipe', () => {
-  it('passes the input iterable through all transforms', () => {
+  it('passes the input iterable through all transforms and returns an Array', () => {
     const input = [1, 2, 3]
 
     const first = jest.fn(take(0))
@@ -22,6 +22,15 @@ describe('pipe', () => {
 
     expect(third).toHaveBeenCalledTimes(1)
     expect(Array.from(third.mock.calls[0][0])).toEqual([])
+  })
+
+  it('throws if no transforms are passed', () => {
+    expect(() => pipe()).toThrowError()
+  })
+
+  it('throws if the value isn\'t iterable', () => {
+    const piped = pipe(take(0))
+    expect(() => piped(5)).toThrowError()
   })
 })
 

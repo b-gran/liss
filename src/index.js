@@ -1,6 +1,10 @@
 import { getIterator } from './utils'
 
 export function pipe (...transforms) {
+  if (transforms.length === 0) {
+    throw new Error('You must pass at least one transform')
+  }
+
   return iterableOrArray => {
     const iterable = getIterator(iterableOrArray)
     return Array.from(transforms.reduce(
