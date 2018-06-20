@@ -43,3 +43,17 @@ export function take (n) {
     }
   }
 }
+
+export function drop (n) {
+  return function* (iterable) {
+    for (let i = 0; i < n; i++) {
+      const { done } = iterable.next()
+      if (done) {
+        return
+      }
+    }
+    for (const el of iterable) {
+      yield el
+    }
+  }
+}

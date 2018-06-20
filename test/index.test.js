@@ -1,4 +1,4 @@
-import { pipe, take, map, filter } from '../src'
+import { pipe, take, map, filter, drop } from '../src'
 import { getIterator } from '../src/utils'
 
 describe('pipe', () => {
@@ -83,5 +83,22 @@ describe('filter', () => {
     Array.from(doFilter(getIterator(input)))
 
     expect(predicate).toHaveBeenCalledTimes(input.length)
+  })
+})
+
+describe('drop', () => {
+  it('drops the first n elements of the iterable', () => {
+    const iterable = getIterator([1, 2, 3, 4])
+    expect(Array.from(drop(2)(iterable))).toEqual([3, 4])
+  })
+
+  it('returns an empty iterable', () => {
+    const iterable = getIterator([1, 2, 3])
+    expect(Array.from(drop(5)(iterable))).toEqual([])
+  })
+
+  it('returns every element of the iterable', () => {
+    const iterable = getIterator([1, 2, 3])
+    expect(Array.from(drop(0)(iterable))).toEqual([1, 2, 3])
   })
 })
