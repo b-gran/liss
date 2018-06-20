@@ -70,3 +70,12 @@ export function append (value) {
     yield value
   }
 }
+
+export function prepend (value) {
+  return function* (iterable) {
+    yield value
+    for (const el of iterable) {
+      yield el
+    }
+  }
+}
