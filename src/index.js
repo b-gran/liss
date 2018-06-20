@@ -61,3 +61,12 @@ export function drop (n) {
 export function tail () {
   return drop(1)
 }
+
+export function append (value) {
+  return function* (iterable) {
+    for (const el of iterable) {
+      yield el
+    }
+    yield value
+  }
+}

@@ -1,4 +1,4 @@
-import { pipe, take, map, filter, drop, tail } from '../src'
+import { pipe, take, map, filter, drop, tail, append } from '../src'
 import { getIterator } from '../src/utils'
 
 describe('pipe', () => {
@@ -112,5 +112,17 @@ describe('tail', () => {
   it('returns an empty iterable', () => {
     const iterable = getIterator([1])
     expect(Array.from(tail()(iterable))).toEqual([])
+  })
+})
+
+describe('append', () => {
+  it('appends the element', () => {
+    const iterable = getIterator([1, 2, 3])
+    expect(Array.from(append(4)(iterable))).toEqual([1, 2, 3, 4])
+  })
+
+  it('return an iterator containing only the element', () => {
+    const iterable = getIterator([])
+    expect(Array.from(append(1)(iterable))).toEqual([1])
   })
 })
